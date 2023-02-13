@@ -23,9 +23,9 @@ public class DaoPasajeroMySql implements DaoPasajero{
 	
 	
 	public boolean abrirConexion(){
-		String url = "jdbc:mysql://127.0.0.1:3306/coches?serverTimezone=UTC";
+		String url = "jdbc:mysql://localhost:3306/coches?serverTimezone=UTC";
 		String user = "root";
-		String pass = "admin";
+		String pass = "your_password";
 		try {
 			conexion = DriverManager.getConnection(url,user,pass);
 		} catch (SQLException e) {
@@ -54,7 +54,7 @@ public class DaoPasajeroMySql implements DaoPasajero{
 		boolean alta = true;
 		
 		String query = "INSERT INTO pasajeros (nombre, edad, peso)"
-				+ "VALUES (?, ?, ?, ?);";
+				+ "VALUES (?, ?, ?);";
 		try {
 			PreparedStatement ps = conexion.prepareStatement(query);
 			ps.setString(1, p.getNombre());
@@ -128,6 +128,37 @@ public class DaoPasajeroMySql implements DaoPasajero{
 		} catch (SQLException e) {
 			System.out.println("obtener -> error al obtener la "
 					+ "persona con id " + id);
+			e.printStackTrace();
+		} finally {
+			cerrarConexion();
+		}
+		return pasajero;
+	}
+	
+	public Pasajero obtenerPenC(int idCoche) {
+		if(!abrirConexion()){
+			return null;
+		}		
+		Pasajero pasajero = null;
+		
+		String query = "select id,nombre,edad,peso,coche_id from coches.pasajeros" +
+				" where coche_id=?";
+		try {
+			PreparedStatement ps = conexion.prepareStatement(query);
+			ps.setInt(1, idCoche);
+			
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				pasajero = new Pasajero();
+				pasajero.setId(rs.getInt(1));
+				pasajero.setNombre(rs.getString(2));
+				pasajero.setEdad(rs.getInt(3));
+				pasajero.setPeso(rs.getDouble(4));
+				pasajero.setCocheId(rs.getInt(5));
+			}
+		} catch (SQLException e) {
+			System.out.println("obtener -> error al obtener la "
+					+ "persona en coche ID " + idCoche);
 			e.printStackTrace();
 		} finally {
 			cerrarConexion();
@@ -237,17 +268,16 @@ public class DaoPasajeroMySql implements DaoPasajero{
 		}		
 		List<Pasajero> listaPasajeros = new ArrayList<>();
 		
-		String query = "select ID,nombre,edad,peso,coche_id from pasajeros" +
+		String query = "select id,nombre,edad,peso,coche_id from coches.pasajeros" +
 				" where coche_id=?";
 		try {
 			PreparedStatement ps = conexion.prepareStatement(query);
 			ps.setInt(1, p.getCocheId());
-			
+			System.out.println(p.getCocheId());
 			ResultSet rs = ps.executeQuery();
-			
+		
 			while(rs.next()){
 				Pasajero pasajero = new Pasajero();
-				pasajero.setId(rs.getInt(1));
 				pasajero.setId(rs.getInt(1));
 				pasajero.setNombre(rs.getString(2));
 				pasajero.setEdad(rs.getInt(3));

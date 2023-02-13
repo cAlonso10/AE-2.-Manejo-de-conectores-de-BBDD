@@ -27,14 +27,19 @@ public class GestorPasajero {
 	}
 
 	public Pasajero obtener(int id){
-		Pasajero coche = daoPasajero.obtener(id);
-		return coche;
+		Pasajero pasajero = daoPasajero.obtener(id);
+		return pasajero;
+	}
+	
+	public Pasajero obtenerPenC(int idCoche){
+		Pasajero pasajero = daoPasajero.obtenerPenC(idCoche);
+		return pasajero;
 	}
 
 	public List<Pasajero> listar(){
 		List<Pasajero> listaPersonas = daoPasajero.listar();
 		return listaPersonas;
-	}
+	}	
 	
 	public boolean altaC(Pasajero p) {
 		boolean altaC = daoPasajero.altaC(p);

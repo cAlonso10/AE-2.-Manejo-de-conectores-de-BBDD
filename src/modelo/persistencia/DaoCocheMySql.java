@@ -19,9 +19,9 @@ public class DaoCocheMySql implements DaoCoche{
 	
 	
 	public boolean abrirConexion(){
-		String url = "jdbc:mysql://127.0.0.1:3306/coches?serverTimezone=UTC";
+		String url = "jdbc:mysql://localhost:3306/coches?serverTimezone=UTC";
 		String user = "root";
-		String pass = "admin";
+		String pass = "your_password";
 		try {
 			conexion = DriverManager.getConnection(url,user,pass);
 		} catch (SQLException e) {

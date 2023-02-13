@@ -13,6 +13,7 @@ public interface DaoPasajero {
 	boolean alta(Pasajero p);
 	boolean baja(int id);
 	Pasajero obtener(int id);
+	Pasajero obtenerPenC(int idCoche);
 	List<Pasajero> listar();
 	boolean altaC(Pasajero p);
 	boolean bajaC(Pasajero p);

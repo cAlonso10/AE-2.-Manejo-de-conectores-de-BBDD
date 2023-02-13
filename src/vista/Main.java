@@ -198,7 +198,7 @@ public class Main {
 		                        case 7:
 		                        	  System.out.println("Introduzca la ID del coche");
 		                        	  int idCoche = sc.nextInt();
-			           				  Pasajero pasajeroC3 = gp.obtener(idCoche);
+			           				  Pasajero pasajeroC3 = gp.obtenerPenC(idCoche);
 		                        	  List<Pasajero> listaPasajerosC = gp.listarC(pasajeroC3);
 		                        	  if (listaPasajerosC != null) {
 		                        	    System.out.println("Lista de pasajeros en el coche con ID " + idCoche + ":");
